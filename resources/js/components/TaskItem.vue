@@ -8,8 +8,13 @@
 </template>
 
 <script setup>
-defineProps({ task: Object })
+import { watch, reactive } from 'vue'
+const props = defineProps(['task'])
 const emit = defineEmits(['delete', 'toggle'])
+
+const localTask = reactive({ ...props.task })
+
+watch(() => localTask.completed, () => emit('toggle', localTask))
 </script>
 
 <style scoped>

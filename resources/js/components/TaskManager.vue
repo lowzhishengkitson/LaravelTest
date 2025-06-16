@@ -25,8 +25,14 @@ const tasks = ref([])
 const newTaskTitle = ref('')
 
 const loadTasks = () => {
-  axios.get('/api/tasks')
-    .then(res => tasks.value = res.data)
+    console.log(localStorage.getItem('auth_token'));
+    axios.get('/api/tasks',
+    {
+        headers:
+        {
+            Authorization: `Bearer ${localStorage.getItem('auth_token')}`
+        }
+    }).then(res => tasks.value = res.data)
     .catch(err => console.error('Error loading tasks:', err))
 }
 
@@ -34,8 +40,12 @@ const createTask = () => {
   const title = newTaskTitle.value.trim()
   if (!title) return
 
-  axios.post('/api/tasks', { title })
-    .then(res => {
+  axios.post('/api/tasks', { title,
+    headers:
+        {
+            Authorization: `Bearer ${localStorage.getItem('auth_token')}`
+        }
+   }).then(res => {
       tasks.value.push(res.data)
       newTaskTitle.value = ''
     })
