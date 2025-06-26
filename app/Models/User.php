@@ -47,4 +47,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function routeNotificationForWhatsapp()
+    {
+        return $this->mobile; // Must be in E.164 format (e.g. +6598765432)
+    }
+
 }

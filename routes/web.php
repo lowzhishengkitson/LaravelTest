@@ -3,7 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\OtpController;
+use App\Http\Controllers\Auth\OtpController;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\InvoiceDownloaderController;
+
+Route::get('/secure-invoice/{id}', [InvoiceDownloaderController::class, 'download'])
+    ->name('secure.invoice')
+    ->middleware('signed'); // Enforce signature validation
+
 
 Route::get('/tasks/{task}', function (Task $task) {
     return view('tasks.show', ['task' => $task]);

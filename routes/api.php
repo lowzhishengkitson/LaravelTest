@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\InvoiceNotifierController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -15,3 +17,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
 });
+
+Route::get('/send', [InvoiceNotifierController::class, 'send']);
